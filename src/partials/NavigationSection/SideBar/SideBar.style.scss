@@ -1,0 +1,73 @@
+.sidebar {
+  &__container {
+    width: 23vw;
+    height: calc(100vh - 82px);
+    border-right: 2px solid lighten(hsla(0, 0%, 23%, 0.8), 20%);
+  }
+
+  &__list {
+    padding-top: 4rem;
+  }
+
+  &__accordion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.4s ease-in-out;
+  }
+}
+
+.accordion {
+  &__category {
+    display: flex;
+    align-items: center;
+    color: var(--barTextColor);
+    font-size: 1.3rem;
+  }
+
+  &__container {
+    cursor: pointer;
+  }
+
+  &__chevron {
+    width: 20px;
+    color: var(--chevronColor);
+    transition: all 0.2s ease-in-out;
+
+    &--expanded {
+      transform: scaleY(-1);
+    }
+  }
+  &__details {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    position: relative;
+    width: 20%;
+    color: var(--barTextAccent);
+    font-size: 1.1rem;
+    line-height: 1.5;
+
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &--visible {
+      opacity: 1;
+
+      transform: translateY(10px);
+    }
+    &--invisible {
+      opacity: 0;
+
+      transform: translateY(-10px);
+    }
+  }
+
+  //Placeholder rules until I implement React Router
+  &__subcategory {
+    &:active {
+      color: red;
+      font-weight: 600;
+    }
+  }
+}

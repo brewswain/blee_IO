@@ -1,0 +1,17 @@
+.copied {
+  &__code {
+    position: relative;
+  }
+}
+
+.copy {
+  &__button {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+
+    width: 25px;
+    stroke: white;
+    cursor: pointer;
+  }
+}

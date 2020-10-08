@@ -1,0 +1,28 @@
+body {
+  // MacroSite stylings
+  --barBackgroundColor: hsla(0, 0%, 23%, 1);
+  --articleBackgroundColor: hsla(0, 0%, 23%, 0.8);
+  --barTextColor: whitesmoke;
+  --barTextAccent: white;
+  --chevronColor: hsla(0, 0%, 76%, 0.8);
+  --articleTextColor: whitesmoke;
+  --transitionDelay: 0.7s;
+  --scrollbar-thumb-background-color: #a70254;
+
+  --theme-selector-color: hsl(24, 100%, 50%);
+  --download-icon-color: hsl(41, 96%, 62%);
+
+  background: var(--barBackgroundColor);
+  transition: all var(--transitionDelay) ease;
+}
+.light {
+  --barBackgroundColor: hsla(0, 0%, 83%, 1);
+  --articleBackgroundColor: hsla(0, 0%, 83%, 0.8);
+  --barTextColor: hsl(0, 0%, 33%);
+  --barTextAccent: hsl(0, 0%, 27%);
+  --articleTextColor: hsl(0, 0%, 33%);
+  --chevronColor: hsla(0, 0%, 58%, 0.8);
+  --scrollbar-thumb-background-color: #3a549b;
+  --theme-selector-color: hsl(263, 76%, 39%);
+  --download-icon-color: hsl(345, 98%, 63%);
+}

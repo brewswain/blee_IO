@@ -1,0 +1,82 @@
+.content {
+  &__container {
+    width: 100%;
+    height: calc(100vh - 82px);
+    padding: 0 2rem 0 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  &__download {
+    width: 100%;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: var(--articleTextColor);
+    padding-top: 2rem;
+  }
+
+  &__header {
+    font-size: 4rem;
+    color: var(--articleTextColor);
+  }
+
+  &__subheader {
+    font-size: 1.6rem;
+    color: var(--articleTextColor);
+    padding-top: 1rem;
+  }
+
+  &__example {
+    display: flex;
+    justify-content: flex-start;
+
+    width: 100%;
+    padding: 1rem;
+
+    &:focus {
+      color: green;
+      font-size: 3rem;
+    }
+  }
+
+  &__code {
+    background: white;
+    width: 900px;
+    min-height: 200px;
+    max-height: 450px;
+    margin-left: 5rem;
+  }
+}
+
+.download {
+  &__button {
+    width: 30px;
+    padding-left: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--download-icon-color);
+    }
+  }
+}
+
+pre {
+  min-width: 500px;
+  min-height: 200px;
+}
+
+.content__container::-webkit-scrollbar {
+  width: 8px;
+}
+.content__container::-webkit-scrollbar-track {
+  background: none;
+}
+.content__container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-background-color);
+  border-radius: 4px;
+  border: 3px solid none;
+}
