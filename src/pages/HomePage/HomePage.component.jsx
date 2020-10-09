@@ -40,27 +40,17 @@ const HomePage = () => {
     console.log(componentData);
   }, [componentData]);
   return (
-    // // Chose to use 2 classes for the eventuality of styling clashes
-    // // between differing pages
-    // <ThemeContext.Provider value={{ themeData, setThemeData }}>
-    //   <div className="page__container homepage__container">
-    //     <TopBar theme={themeData.isDarkMode} />
+    <ThemeContext.Provider value={{ themeData, setThemeData }}>
+      <div className="page__container homepage__container">
+        <TopBar theme={themeData.isDarkMode} />
 
-    //     <div className="site__wrapper">
-    //       <SideBar />
-    //       <PageContent
-    //         name={componentData.name}
-    //         codeSnippet={componentData.codeSnippet}
-    //         styleSnippet={componentData.styleSnippet}
-    //       />
-    //       {/* {exampleComponents.components.map((exampleComponent) => (
-    //         <div>{exampleComponent.name}</div>
-    //       ))} */}
-    //     </div>
-    //   </div>
-    // </ThemeContext.Provider>
-
-    <h1>Hi from Homepage</h1>
+        <div className="site__wrapper">
+          <SideBar />
+          <h1>Hi from Homepage</h1>
+          ))} */}
+        </div>
+      </div>
+    </ThemeContext.Provider>
   );
 };
 

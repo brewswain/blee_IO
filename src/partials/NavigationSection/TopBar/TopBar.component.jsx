@@ -5,6 +5,8 @@ import "./TopBar.style.scss";
 import { Moon, Sun } from "../../../assets";
 import { ThemeContext } from "../../../contexts";
 
+import { Link } from "react-router-dom";
+
 const TopBar = () => {
   const { themeData, setThemeData } = useContext(ThemeContext);
 
@@ -17,7 +19,9 @@ const TopBar = () => {
   return (
     // change classname from topbar to something better
     <div className="topbar__container">
-      <div className="topbar__title">Blee's Box</div>
+      <Link to="/" className="topbar__title">
+        Blee's Box
+      </Link>
       <div
         className="theme__toggle"
         onClick={() => {

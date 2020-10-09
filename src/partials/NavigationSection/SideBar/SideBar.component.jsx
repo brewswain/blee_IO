@@ -17,6 +17,8 @@ const SideBar = () => {
 
   let { path, url } = useRouteMatch();
 
+  const testArray = ["CustomButton", "test3"];
+
   return (
     <div className="sidebar__container">
       <div className="sidebar__list">
@@ -43,10 +45,21 @@ const SideBar = () => {
                 : "accordion__details--invisible"
             } accordion__details`}
           >
-            <Link className="sidebar__link" to={`/components/CustomButton`}>
+            {/* <Link
+              className="sidebar__link"
+              to={`/components/CustomButton`}
+              replace
+            >
               CustomButton
             </Link>
-            <div className="accordion__subcategory">Hi</div>
+            <Link className="sidebar__link" to={`/components/test3`} replace>
+              test3
+            </Link> */}
+            {testArray.map((testLink) => (
+              <Link className="sidebar__link" to={`/components/${testLink}`}>
+                {testLink}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

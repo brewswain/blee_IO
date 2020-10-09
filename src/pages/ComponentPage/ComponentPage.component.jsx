@@ -6,9 +6,10 @@ import { PageContent, SideBar, TopBar } from "../../partials";
 import { ThemeContext } from "../../contexts";
 import { firestore } from "../../firebase/firebase.utils";
 
-import exampleComponents from "../../data/exampleComponents.data";
+import { useRouteMatch, useParams, useLocation } from "react-router-dom";
 
 const ComponentPage = () => {
+  const [currentUrl, setCurrentUrl] = useState("components");
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
@@ -18,8 +19,11 @@ const ComponentPage = () => {
     styleSnippet: null,
   });
 
+  let match = useLocation();
+  const formattedUrl = match.pathname.replace("/", "");
+
   const getCollections = async () => {
-    const collectionsFromFirestore = firestore.doc("components/CustomButton");
+    const collectionsFromFirestore = firestore.doc(`${formattedUrl}`);
     const snapShot = await collectionsFromFirestore.get();
     // console.log(snapShot.data());
     // console.log(snapShot.data().codeSnippet);
@@ -31,11 +35,13 @@ const ComponentPage = () => {
       codeSnippet: componentObject.codeSnippet,
       styleSnippet: componentObject.styleSnippet,
     });
+
+    setCurrentUrl(formattedUrl);
   };
 
   useEffect(() => {
     getCollections();
-  }, []);
+  }, [formattedUrl]);
   useEffect(() => {
     console.log(componentData);
   }, [componentData]);
