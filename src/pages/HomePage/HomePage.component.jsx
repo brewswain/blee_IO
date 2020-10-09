@@ -47,7 +47,6 @@ const HomePage = () => {
         <div className="site__wrapper">
           <SideBar />
           <h1>Hi from Homepage</h1>
-          ))} */}
         </div>
       </div>
     </ThemeContext.Provider>
