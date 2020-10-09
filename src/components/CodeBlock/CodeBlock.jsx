@@ -13,7 +13,8 @@ const CodeBlock = ({ value }) => {
       <CopyToClipboard text={value} className="copy__button">
         <CopyIcon className="copy__icon" />
       </CopyToClipboard>
-      <SyntaxHighlighter language="javascript" style={tomorrow}>
+      {/* TODO: dynamically add language; both jsx and scss */}
+      <SyntaxHighlighter language="jsx" style={tomorrow}>
         {value}
       </SyntaxHighlighter>
     </div>

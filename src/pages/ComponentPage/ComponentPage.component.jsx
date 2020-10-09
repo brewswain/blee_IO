@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import "./HomePage.style.scss";
+import "./ComponentPage.style.scss";
 
 import { PageContent, SideBar, TopBar } from "../../partials";
 import { ThemeContext } from "../../contexts";
@@ -8,7 +8,7 @@ import { firestore } from "../../firebase/firebase.utils";
 
 import exampleComponents from "../../data/exampleComponents.data";
 
-const HomePage = () => {
+const ComponentPage = () => {
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
@@ -40,28 +40,26 @@ const HomePage = () => {
     console.log(componentData);
   }, [componentData]);
   return (
-    // // Chose to use 2 classes for the eventuality of styling clashes
-    // // between differing pages
-    // <ThemeContext.Provider value={{ themeData, setThemeData }}>
-    //   <div className="page__container homepage__container">
-    //     <TopBar theme={themeData.isDarkMode} />
+    // Chose to use 2 classes for the eventuality of styling clashes
+    // between differing pages
+    <ThemeContext.Provider value={{ themeData, setThemeData }}>
+      <div className="page__container homepage__container">
+        <TopBar theme={themeData.isDarkMode} />
 
-    //     <div className="site__wrapper">
-    //       <SideBar />
-    //       <PageContent
-    //         name={componentData.name}
-    //         codeSnippet={componentData.codeSnippet}
-    //         styleSnippet={componentData.styleSnippet}
-    //       />
-    //       {/* {exampleComponents.components.map((exampleComponent) => (
-    //         <div>{exampleComponent.name}</div>
-    //       ))} */}
-    //     </div>
-    //   </div>
-    // </ThemeContext.Provider>
-
-    <h1>Hi from Homepage</h1>
+        <div className="site__wrapper">
+          <SideBar />
+          <PageContent
+            name={componentData.name}
+            codeSnippet={componentData.codeSnippet}
+            styleSnippet={componentData.styleSnippet}
+          />
+          {/* {exampleComponents.components.map((exampleComponent) => (
+            <div>{exampleComponent.name}</div>
+          ))} */}
+        </div>
+      </div>
+    </ThemeContext.Provider>
   );
 };
 
-export default HomePage;
+export default ComponentPage;

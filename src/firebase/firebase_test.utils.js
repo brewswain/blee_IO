@@ -9,23 +9,20 @@ firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore();
 
-// We just want to create our database information programmatically
-export const createCollectionInFirestore = async () => {
-  const collectionRef = firestore.doc(`components/${componentData.uid}`);
-  const snapShot = await collectionRef.get();
+export const migrateDocumentsToFirestore = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  let collectionRef = firestore.collection(collectionKey);
 
-  if (!snapShot.exists) {
-    // probably need to do some destructuring here
-    const createdAt = new Date();
+  let batch = firestore.batch();
 
-    try {
-      await collectionRef.set({
-        createdAt,
-      });
-    } catch (error) {
-      console.error("Error creating document:", error.message);
-    }
-  }
+  objectsToAdd.forEach((object) => {
+    let newDocumentRef = collectionRef.doc(object.name);
+    batch.set(newDocumentRef, object);
+  });
+
+  return await batch.commit();
 };
 
 export default firebase;

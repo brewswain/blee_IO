@@ -1,3 +1,5 @@
+import AdminPage from "./AdminPage/AdminPage.component";
+import ComponentPage from "./ComponentPage/ComponentPage.component";
 import HomePage from "./HomePage/HomePage.component";
 
-export { HomePage };
+export { AdminPage, ComponentPage, HomePage };

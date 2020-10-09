@@ -4,8 +4,18 @@ import "./SideBar.style.scss";
 
 import { Chevron } from "../../../assets";
 
+import {
+  Switch,
+  Link,
+  Route,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
+
 const SideBar = () => {
   const [expanded, setExpanded] = useState(false);
+
+  let { path, url } = useRouteMatch();
 
   return (
     <div className="sidebar__container">
@@ -33,7 +43,9 @@ const SideBar = () => {
                 : "accordion__details--invisible"
             } accordion__details`}
           >
-            <div className="accordion__subcategory">Hey</div>
+            <Link className="sidebar__link" to={`/components/CustomButton`}>
+              CustomButton
+            </Link>
             <div className="accordion__subcategory">Hi</div>
           </div>
         </div>
