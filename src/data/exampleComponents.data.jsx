@@ -511,99 +511,98 @@ const exampleComponents = {
   commonFlows: {
     id: 2,
     items: [
-      {
-        id: 1,
-        name: "FirebaseAuth",
-        description:
-          "This flow uses firebase's auth library to set up our initial use auth experience. Don't forget to make sure that the login types are enabled in firebase's console!",
-        codeSnippet_1: `
-        import firebase from "firebase/app";
-        import "firebase/firestore";
-        import "firebase/auth";
+      // {
+      //   id: 1,
+      //   name: "FirebaseAuth",
+      //   description:
+      //     "This flow uses firebase's auth library to set up our initial use auth experience. Don't forget to make sure that the login types are enabled in firebase's console!",
+      //   codeSnippet_1: `
+      //   import firebase from "firebase/app";
+      //   import "firebase/firestore";
+      //   import "firebase/auth";
 
-        const config = {
-          // Enter your firebaseConfig object here
-        };
+      //   const config = {
+      //     // Enter your firebaseConfig object here
+      //   };
 
-        export const createUserInFireStore = async (userAuth, additionalData) => {
-          if (!userAuth) return;
+      //   export const createUserInFireStore = async (userAuth, additionalData) => {
+      //     if (!userAuth) return;
 
-          const userRef = firestore.doc(\`users/\${userAuth.uid}\`);
-          const snapShot = await userRef.get();
+      //     const userRef = firestore.doc(\`users/\${userAuth.uid}\`);
+      //     const snapShot = await userRef.get();
 
-          if (!snapShot.exists) {
-            // We have to use the reference for CRUD operations
-            const { displayName, email } = userAuth;
-            const createdAt = new Date();
+      //     if (!snapShot.exists) {
+      //       // We have to use the reference for CRUD operations
+      //       const { displayName, email } = userAuth;
+      //       const createdAt = new Date();
 
-            try {
-              await userRef.set({
-                displayName,
-                email,
-                createdAt,
-                ...additionalData,
-              });
-            } catch (error) {
-              console.error("error creating user", error.message);
-            }
-          }
+      //       try {
+      //         await userRef.set({
+      //           displayName,
+      //           email,
+      //           createdAt,
+      //           ...additionalData,
+      //         });
+      //       } catch (error) {
+      //         console.error("error creating user", error.message);
+      //       }
+      //     }
 
-          return userRef;
-        };
+      //     return userRef;
+      //   };
 
-        firebase.initializeApp(config);
+      //   firebase.initializeApp(config);
 
-        export const auth = firebase.auth();
-        export const firestore = firebase.firestore();
+      //   export const auth = firebase.auth();
+      //   export const firestore = firebase.firestore();
 
-        const provider = new firebase.auth.GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: "select_account" });
+      //   const provider = new firebase.auth.GoogleAuthProvider();
+      //   provider.setCustomParameters({ prompt: "select_account" });
 
-        export const signInWithGoogle = () => auth.signInWithPopup(provider);
+      //   export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
-        export default firebase;
+      //   export default firebase;
 
-        `,
-        codeSnippet_2: `
-        const [currentUser, setCurrentUser] = useState(null);
-        const isLoggedIn = localStorage.getItem("user");
+      //   `,
+      //   codeSnippet_2: `
+      //   const [currentUser, setCurrentUser] = useState(null);
+      //   const isLoggedIn = localStorage.getItem("user");
 
-        useEffect(() => {
-          let unsubscribeFromAuth = null;
-          unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-            if (userAuth) {
-              const userRef = await createUserInFireStore(userAuth);
+      //   useEffect(() => {
+      //     let unsubscribeFromAuth = null;
+      //     unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      //       if (userAuth) {
+      //         const userRef = await createUserInFireStore(userAuth);
 
-              userRef.onSnapshot(async (snapShot) => {
-                localStorage.setItem(
-                  "user",
-                  JSON.stringify({ id: snapShot.id, data: snapShot.data() })
-                );
-                setCurrentUser({
-                  id: snapShot.id,
-                  ...snapShot.data(),
-                });
-              });
-            } else {
-              setCurrentUser(userAuth);
-            }
-          });
+      //         userRef.onSnapshot(async (snapShot) => {
+      //           localStorage.setItem(
+      //             "user",
+      //             JSON.stringify({ id: snapShot.id, data: snapShot.data() })
+      //           );
+      //           setCurrentUser({
+      //             id: snapShot.id,
+      //             ...snapShot.data(),
+      //           });
+      //         });
+      //       } else {
+      //         setCurrentUser(userAuth);
+      //       }
+      //     });
 
-          return () => {
-            unsubscribeFromAuth();
-          };
-        }, []);
-      `,
-      },
+      //     return () => {
+      //       unsubscribeFromAuth();
+      //     };
+      //   }, []);
+      // `,
+      // },
       {
         id: 2,
         name: "ThemeToggle",
         description:
           "An easy way to set up basic Dark/Lightmode toggles, using CSS variables and the Context API",
         codeSnippet: `
-
-        Use on component that you'll have the style toggle on.
-        For example, This is this site's implementation:
+        // Use on component that you'll have the style toggle on.
+        // For example, This is this site's implementation:
 
         --- <ThemeContext /> ---
 
@@ -694,8 +693,8 @@ const exampleComponents = {
           }
           `,
       },
-      { id: 3, name: "", description: "", codeSnippet: ``, styleSnippet: `` },
-      { id: 4, name: "", description: "", codeSnippet: ``, styleSnippet: `` },
+      // { id: 3, name: "", description: "", codeSnippet: ``, styleSnippet: `` },
+      // { id: 4, name: "", description: "", codeSnippet: ``, styleSnippet: `` },
     ],
   },
   projectStructure: {

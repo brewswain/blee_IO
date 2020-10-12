@@ -6,8 +6,8 @@ import { firestore } from "../../firebase/firebase.utils";
 
 import { useLocation } from "react-router-dom";
 
-const CommonFlowPage = () => {
-  const [currentUrl, setCurrentUrl] = useState("commonFlows");
+const ProjectStructurePage = () => {
+  const [currentUrl, setCurrentUrl] = useState("projectStructure");
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
@@ -17,6 +17,7 @@ const CommonFlowPage = () => {
     styleSnippet: null,
     codeSnippet_1: null,
     codeSnippet_2: null,
+    codeSnippet_3: null,
   });
 
   let match = useLocation();
@@ -34,6 +35,7 @@ const CommonFlowPage = () => {
       codeSnippet: componentObject.codeSnippet,
       codeSnippet_1: componentObject.codeSnippet_1,
       codeSnippet_2: componentObject.codeSnippet_2,
+      codeSnippet_3: componentObject.codeSnippet_3,
       styleSnippet: componentObject.styleSnippet,
     });
 
@@ -58,6 +60,7 @@ const CommonFlowPage = () => {
             codeSnippet={componentData.codeSnippet}
             codeSnippet_1={componentData.codeSnippet_1}
             codeSnippet_2={componentData.codeSnippet_2}
+            codeSnippet_3={componentData.codeSnippet_3}
             styleSnippet={componentData.styleSnippet}
           />
         </div>
@@ -66,4 +69,4 @@ const CommonFlowPage = () => {
   );
 };
 
-export default CommonFlowPage;
+export default ProjectStructurePage;

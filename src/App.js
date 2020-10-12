@@ -8,7 +8,13 @@ import { SideBar, TopBar } from "./partials";
 
 import { migrateDocumentsToFirestore } from "./firebase/firebase.utils";
 import exampleComponents from "./data/exampleComponents.data";
-import { AdminPage, ComponentPage, HomePage } from "./pages/index";
+import {
+  AdminPage,
+  CommonFlowPage,
+  ComponentPage,
+  HomePage,
+  ProjectStructurePage,
+} from "./pages/index";
 import { Switch, Route } from "react-router-dom";
 
 function App() {
@@ -18,18 +24,16 @@ function App() {
 
   // Programmatically adds data from our exampleComponents.data.jsx file to our backend.
 
-  // let componentsArray = Object.keys(
-  //   exampleComponents.components.items
-  // ).map((key) => exampleComponents.components.items[key]);
+  // let componentsArray = Object.keys(exampleComponents.components.items).map(
+  //   (key) => exampleComponents.components.items[key]
+  // );
   // useEffect(() => {
   //   migrateDocumentsToFirestore(
   //     "components",
-  //     componentsArray.map(({ name, component, codeSnippet,
-  //       styleSnippet,
+  //     componentsArray.map(({ name, component, codeSnippet, styleSnippet }) => ({
   //       // codeSnippet_1, codeSnippet_2, codeSnippet_3
-  //     }) => ({
-  //        codeSnippet,
-  //      styleSnippet,
+  //       codeSnippet,
+  //       styleSnippet,
   //       name,
 
   //       // codeSnippet_1,
@@ -48,6 +52,12 @@ function App() {
           </Route>
           <Route path="/components">
             <ComponentPage />
+          </Route>
+          <Route path="/commonFlows">
+            <CommonFlowPage />
+          </Route>
+          <Route path="/projectStructure">
+            <ProjectStructurePage />
           </Route>
           <Route exact path="/admin">
             <AdminPage />
