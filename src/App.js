@@ -6,8 +6,8 @@ import "./theme.scss";
 import { ThemeContext } from "./contexts";
 import { SideBar, TopBar } from "./partials";
 
-// import { migrateDocumentsToFirestore } from "./firebase/firebase.utils";
-// import exampleComponents from "./data/exampleComponents.data";
+import { migrateDocumentsToFirestore } from "./firebase/firebase.utils";
+import exampleComponents from "./data/exampleComponents.data";
 import { AdminPage, ComponentPage, HomePage } from "./pages/index";
 import { Switch, Route } from "react-router-dom";
 
@@ -15,22 +15,30 @@ function App() {
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
+
   // Programmatically adds data from our exampleComponents.data.jsx file to our backend.
 
-  // let componentsArray = Object.keys(exampleComponents.components.items).map(
-  //   (key) => exampleComponents.components.items[key]
-  // );
-  // console.log(componentsArray);
+  // let componentsArray = Object.keys(
+  //   exampleComponents.components.items
+  // ).map((key) => exampleComponents.components.items[key]);
   // useEffect(() => {
   //   migrateDocumentsToFirestore(
   //     "components",
-  //     componentsArray.map(({ name, component, codeSnippet, styleSnippet }) => ({
-  //       name,
-  //       codeSnippet,
+  //     componentsArray.map(({ name, component, codeSnippet,
   //       styleSnippet,
+  //       // codeSnippet_1, codeSnippet_2, codeSnippet_3
+  //     }) => ({
+  //        codeSnippet,
+  //      styleSnippet,
+  //       name,
+
+  //       // codeSnippet_1,
+  //       // codeSnippet_2,
+  //       // codeSnippet_3,
   //     }))
   //   );
   // }, []);
+
   return (
     <ThemeContext.Provider value={{ themeData, setThemeData }}>
       <div className="App">

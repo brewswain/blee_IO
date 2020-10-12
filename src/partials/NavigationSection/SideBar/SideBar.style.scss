@@ -53,11 +53,13 @@
     color: var(--barTextAccent);
     font-size: 1.1rem;
     line-height: 1.5;
+    z-index: -1;
 
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 
     &--visible {
+      z-index: 1;
       opacity: 1;
 
       transform: translateY(10px);

@@ -6,7 +6,7 @@ import { PageContent, SideBar, TopBar } from "../../partials";
 import { ThemeContext } from "../../contexts";
 import { firestore } from "../../firebase/firebase.utils";
 
-import { useRouteMatch, useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const ComponentPage = () => {
   const [currentUrl, setCurrentUrl] = useState("components");
@@ -32,6 +32,7 @@ const ComponentPage = () => {
 
     setComponentData({
       name: componentObject.name,
+      language: componentObject.language,
       codeSnippet: componentObject.codeSnippet,
       styleSnippet: componentObject.styleSnippet,
     });
@@ -59,9 +60,6 @@ const ComponentPage = () => {
             codeSnippet={componentData.codeSnippet}
             styleSnippet={componentData.styleSnippet}
           />
-          {/* {exampleComponents.components.map((exampleComponent) => (
-            <div>{exampleComponent.name}</div>
-          ))} */}
         </div>
       </div>
     </ThemeContext.Provider>

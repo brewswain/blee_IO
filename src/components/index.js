@@ -1,3 +1,4 @@
-import CodeBlock from "./CodeBlock/CodeBlock";
+import CodeBlock from "./CodeBlock/CodeBlock.component";
+import StyleBlock from "./StyleBlock/StyleBlock.component";
 
-export { CodeBlock };
+export { CodeBlock, StyleBlock };
