@@ -4,12 +4,13 @@ import "./ComponentPage.style.scss";
 
 import { PageContent, SideBar, TopBar } from "../../partials";
 import { ThemeContext } from "../../contexts";
-import { firestore } from "../../firebase/firebase.utils";
+import { firestore, storage } from "../../firebase/firebase.utils";
 
 import { useLocation } from "react-router-dom";
 
 const ComponentPage = () => {
   const [currentUrl, setCurrentUrl] = useState("components");
+  const [downloadUrl, setDownloadUrl] = useState(null);
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
@@ -25,10 +26,7 @@ const ComponentPage = () => {
   const getCollections = async () => {
     const collectionsFromFirestore = firestore.doc(`${formattedUrl}`);
     const snapShot = await collectionsFromFirestore.get();
-    // console.log(snapShot.data());
-    // console.log(snapShot.data().codeSnippet);
     const componentObject = snapShot.data();
-    console.log(componentObject);
 
     setComponentData({
       name: componentObject.name,
@@ -40,12 +38,25 @@ const ComponentPage = () => {
     setCurrentUrl(formattedUrl);
   };
 
+  const storageRef = storage.ref();
+  const getDownload = async () => {
+    setDownloadUrl(
+      await storageRef
+        .child(`components/${componentData.name}.zip`)
+        .getDownloadURL()
+    );
+  };
+
   useEffect(() => {
     getCollections();
   }, [formattedUrl]);
+
   useEffect(() => {
-    console.log(componentData);
+    if (componentData.name) {
+      getDownload();
+    }
   }, [componentData]);
+
   return (
     // Chose to use 2 classes for the eventuality of styling clashes
     // between differing pages
@@ -59,6 +70,7 @@ const ComponentPage = () => {
             name={componentData.name}
             codeSnippet={componentData.codeSnippet}
             styleSnippet={componentData.styleSnippet}
+            downloadUrl={downloadUrl}
           />
         </div>
       </div>

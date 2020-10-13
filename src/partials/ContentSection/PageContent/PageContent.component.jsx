@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import "./PageContent.style.scss";
 
 import ReactMarkdown from "react-markdown";
+import { Link } from "react-router-dom";
 
 import { DownloadIcon } from "../../../assets";
 import { CodeBlock, StyleBlock } from "../../../components";
@@ -16,13 +17,14 @@ const PageContent = ({
   codeSnippet_1,
   codeSnippet_2,
   codeSnippet_3,
+  downloadUrl,
   styleSnippet,
 }) => {
   return (
     <div className="content__container">
-      <div className="content__download">
+      <a className="content__download" href={downloadUrl}>
         Download .zip here: <DownloadIcon className="download__button" />
-      </div>
+      </a>
       <div className="content__header">{name}</div>
       {/* unsure how to implement this for now; maybe innerHTML or something */}
 

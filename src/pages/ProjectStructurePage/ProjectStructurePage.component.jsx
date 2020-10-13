@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { PageContent, SideBar, TopBar } from "../../partials";
 import { ThemeContext } from "../../contexts";
-import { firestore } from "../../firebase/firebase.utils";
+import { firestore, storage } from "../../firebase/firebase.utils";
 
 import { useLocation } from "react-router-dom";
 
 const ProjectStructurePage = () => {
   const [currentUrl, setCurrentUrl] = useState("projectStructure");
+  const [downloadUrl, setDownloadUrl] = useState(null);
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
@@ -27,7 +28,6 @@ const ProjectStructurePage = () => {
     const collectionsFromFirestore = firestore.doc(`${formattedUrl}`);
     const snapShot = await collectionsFromFirestore.get();
     const componentObject = snapShot.data();
-    console.log("common flows data object = ", componentObject);
 
     setComponentData({
       name: componentObject.name,
@@ -42,9 +42,24 @@ const ProjectStructurePage = () => {
     setCurrentUrl(formattedUrl);
   };
 
+  const storageRef = storage.ref();
+  const getDownload = async () => {
+    setDownloadUrl(
+      await storageRef
+        .child(`projectStructure/${componentData.name}.zip`)
+        .getDownloadURL()
+    );
+  };
+
   useEffect(() => {
     getCollections();
   }, [formattedUrl]);
+
+  useEffect(() => {
+    if (componentData.name) {
+      getDownload();
+    }
+  }, [componentData]);
 
   return (
     // Chose to use 2 classes for the eventuality of styling clashes
@@ -61,6 +76,7 @@ const ProjectStructurePage = () => {
             codeSnippet_1={componentData.codeSnippet_1}
             codeSnippet_2={componentData.codeSnippet_2}
             codeSnippet_3={componentData.codeSnippet_3}
+            downloadUrl={downloadUrl}
             styleSnippet={componentData.styleSnippet}
           />
         </div>

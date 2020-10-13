@@ -38,9 +38,7 @@ const HomePage = () => {
   useEffect(() => {
     getCollections();
   }, []);
-  useEffect(() => {
-    console.log(componentData);
-  }, [componentData]);
+
   return (
     <ThemeContext.Provider value={{ themeData, setThemeData }}>
       <div className="page__container homepage__container">

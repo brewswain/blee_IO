@@ -263,7 +263,8 @@ const exampleComponents = {
         name: "SignIn",
         component: "",
         codeSnippet: `
-      // This assumes that you're using Firebase and their auth library. For implementation, please see 'Common Flows'
+      // This assumes that you're using Firebase's auth library. 
+      // For implementation, please see 'Common Flows'.
 
       import React, { useContext } from "react";
       import { Link } from "react-router-dom";

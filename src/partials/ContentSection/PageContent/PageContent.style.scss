@@ -17,6 +17,13 @@
     align-items: center;
     color: var(--articleTextColor);
     padding-top: 2rem;
+    text-decoration: none;
+
+    &:hover {
+      .download__button {
+        color: var(--download-icon-color);
+      }
+    }
   }
 
   &__header {

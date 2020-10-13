@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { PageContent, SideBar, TopBar } from "../../partials";
 import { ThemeContext } from "../../contexts";
-import { firestore } from "../../firebase/firebase.utils";
+import { firestore, storage } from "../../firebase/firebase.utils";
 
 import { useLocation } from "react-router-dom";
 
 const CommonFlowPage = () => {
   const [currentUrl, setCurrentUrl] = useState("commonFlows");
+  const [downloadUrl, setDownloadUrl] = useState(null);
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
@@ -40,9 +41,24 @@ const CommonFlowPage = () => {
     setCurrentUrl(formattedUrl);
   };
 
+  const storageRef = storage.ref();
+  const getDownload = async () => {
+    setDownloadUrl(
+      await storageRef
+        .child(`commonFlows/${componentData.name}.zip`)
+        .getDownloadURL()
+    );
+  };
+
   useEffect(() => {
     getCollections();
   }, [formattedUrl]);
+
+  useEffect(() => {
+    if (componentData.name) {
+      getDownload();
+    }
+  }, [componentData]);
 
   return (
     // Chose to use 2 classes for the eventuality of styling clashes
@@ -58,6 +74,7 @@ const CommonFlowPage = () => {
             codeSnippet={componentData.codeSnippet}
             codeSnippet_1={componentData.codeSnippet_1}
             codeSnippet_2={componentData.codeSnippet_2}
+            downloadUrl={downloadUrl}
             styleSnippet={componentData.styleSnippet}
           />
         </div>
