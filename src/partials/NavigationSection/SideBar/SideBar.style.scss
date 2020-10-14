@@ -13,7 +13,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: all 0.4s ease-in-out;
   }
 
   &__link {
@@ -26,13 +25,14 @@
 .accordion {
   &__category {
     display: flex;
-    align-items: center;
     color: var(--barTextColor);
-    font-size: 1.3rem;
+    font-size: 1.3em;
   }
 
   &__container {
     cursor: pointer;
+    transition: all 0.2s ease-out;
+    width: 180px;
   }
 
   &__chevron {
@@ -49,33 +49,35 @@
     align-items: flex-start;
     flex-direction: column;
     position: relative;
-    width: 20%;
+    width: 100%;
     color: var(--barTextAccent);
     font-size: 1.1rem;
     line-height: 1.5;
     z-index: -1;
+    padding: 0.5rem 0;
+
+    max-height: 10px;
+    overflow: hidden;
 
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+
+    transition: all 0.2s ease-out;
+    // transition: all 0.2s ease-out;
+    // transition: height 0.3s ease;
 
     &--visible {
       z-index: 1;
       opacity: 1;
+      max-height: 100%;
+      overflow: visible;
 
-      transform: translateY(10px);
+      // transform: translateY(10px);
     }
     &--invisible {
       opacity: 0;
+      height: 0;
 
       transform: translateY(-10px);
-    }
-  }
-
-  //Placeholder rules until I implement React Router
-  &__subcategory {
-    &:active {
-      color: red;
-      font-weight: 600;
     }
   }
 }

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 import "./App.css";
 import "./theme.scss";
 
 import { ThemeContext } from "./contexts";
-import { SideBar, TopBar } from "./partials";
 
-import { migrateDocumentsToFirestore } from "./firebase/firebase.utils";
-import exampleComponents from "./data/exampleComponents.data";
+// import { migrateDocumentsToFirestore } from "./firebase/firebase.utils";
+// import exampleComponents from "./data/exampleComponents.data";
 import {
   AdminPage,
   CommonFlowPage,

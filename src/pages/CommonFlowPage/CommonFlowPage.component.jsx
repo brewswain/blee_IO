@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import { PageContent, SideBar, TopBar } from "../../partials";
-import { ThemeContext } from "../../contexts";
 import { firestore, storage } from "../../firebase/firebase.utils";
 
 import { useLocation } from "react-router-dom";
 
 const CommonFlowPage = () => {
-  const [currentUrl, setCurrentUrl] = useState("commonFlows");
+  // const [currentUrl, setCurrentUrl] = useState("commonFlows");
   const [downloadUrl, setDownloadUrl] = useState(null);
-  const [themeData, setThemeData] = useState({
-    isDarkMode: true,
-  });
+
   const [componentData, setComponentData] = useState({
     name: null,
     codeSnippet: null,
@@ -27,7 +24,6 @@ const CommonFlowPage = () => {
     const collectionsFromFirestore = firestore.doc(`${formattedUrl}`);
     const snapShot = await collectionsFromFirestore.get();
     const componentObject = snapShot.data();
-    console.log("common flows data object = ", componentObject);
 
     setComponentData({
       name: componentObject.name,
@@ -38,7 +34,7 @@ const CommonFlowPage = () => {
       styleSnippet: componentObject.styleSnippet,
     });
 
-    setCurrentUrl(formattedUrl);
+    // setCurrentUrl(formattedUrl);
   };
 
   const storageRef = storage.ref();
@@ -63,9 +59,8 @@ const CommonFlowPage = () => {
   return (
     // Chose to use 2 classes for the eventuality of styling clashes
     // between differing pages
-    <ThemeContext.Provider value={{ themeData, setThemeData }}>
       <div className="page__container homepage__container">
-        <TopBar theme={themeData.isDarkMode} />
+        <TopBar />
 
         <div className="site__wrapper">
           <SideBar />
@@ -79,7 +74,6 @@ const CommonFlowPage = () => {
           />
         </div>
       </div>
-    </ThemeContext.Provider>
   );
 };
 

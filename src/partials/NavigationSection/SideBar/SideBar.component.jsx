@@ -43,14 +43,12 @@ const SideBar = () => {
               onClick={() => {
                 setComponentExpanded(!componentExpanded);
               }}
-            >
-              Components
+            >Components
               <Chevron
                 className={`${
                   componentExpanded ? "accordion__chevron--expanded" : null
                 } accordion__chevron`}
-              />
-            </div>
+              /></div>
             <div
               className={`${
                 componentExpanded

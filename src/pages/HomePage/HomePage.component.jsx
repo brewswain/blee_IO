@@ -1,48 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import "./HomePage.style.scss";
 
-import { PageContent, SideBar, TopBar } from "../../partials";
-import { ThemeContext } from "../../contexts";
-import { firestore } from "../../firebase/firebase.utils";
+import {  SideBar, TopBar } from "../../partials";
 
-import exampleComponents from "../../data/exampleComponents.data";
 
 const HomePage = () => {
-  const [themeData, setThemeData] = useState({
-    isDarkMode: true,
-  });
-  const [componentData, setComponentData] = useState({
-    name: null,
-    codeSnippet: null,
-    styleSnippet: null,
-  });
-
-  const getCollections = async () => {
-    const collectionsFromFirestore = firestore.doc("components/CustomButton");
-    const snapShot = await collectionsFromFirestore.get();
-
-    // console.log(snapShot.data());
-    // console.log(snapShot.data().codeSnippet);
-    const componentObject = snapShot.data();
-
-    console.log("componentObject", componentObject);
-
-    setComponentData({
-      name: componentObject.name,
-      codeSnippet: componentObject.codeSnippet,
-      styleSnippet: componentObject.styleSnippet,
-    });
-  };
-
-  useEffect(() => {
-    getCollections();
-  }, []);
 
   return (
-    <ThemeContext.Provider value={{ themeData, setThemeData }}>
       <div className="page__container homepage__container">
-        <TopBar theme={themeData.isDarkMode} />
+        <TopBar />
 
         <div className="site__wrapper">
           <SideBar />
@@ -57,7 +24,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-    </ThemeContext.Provider>
   );
 };
 

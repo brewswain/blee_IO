@@ -3,17 +3,14 @@ import React, { useState, useEffect } from "react";
 import "./ComponentPage.style.scss";
 
 import { PageContent, SideBar, TopBar } from "../../partials";
-import { ThemeContext } from "../../contexts";
 import { firestore, storage } from "../../firebase/firebase.utils";
 
 import { useLocation } from "react-router-dom";
 
 const ComponentPage = () => {
-  const [currentUrl, setCurrentUrl] = useState("components");
+  // const [currentUrl, setCurrentUrl] = useState("components");
   const [downloadUrl, setDownloadUrl] = useState(null);
-  const [themeData, setThemeData] = useState({
-    isDarkMode: true,
-  });
+
   const [componentData, setComponentData] = useState({
     name: null,
     codeSnippet: null,
@@ -35,7 +32,7 @@ const ComponentPage = () => {
       styleSnippet: componentObject.styleSnippet,
     });
 
-    setCurrentUrl(formattedUrl);
+    // setCurrentUrl(formattedUrl);
   };
 
   const storageRef = storage.ref();
@@ -60,9 +57,8 @@ const ComponentPage = () => {
   return (
     // Chose to use 2 classes for the eventuality of styling clashes
     // between differing pages
-    <ThemeContext.Provider value={{ themeData, setThemeData }}>
       <div className="page__container homepage__container">
-        <TopBar theme={themeData.isDarkMode} />
+        <TopBar/>
 
         <div className="site__wrapper">
           <SideBar />
@@ -74,7 +70,6 @@ const ComponentPage = () => {
           />
         </div>
       </div>
-    </ThemeContext.Provider>
   );
 };
 

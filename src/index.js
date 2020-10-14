@@ -4,11 +4,9 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-// use for prod
 import { BrowserRouter } from "react-router-dom";
 
-//use for dev
-import { HashRouter } from "react-router-dom";
+
 
 ReactDOM.render(
   <React.StrictMode>
