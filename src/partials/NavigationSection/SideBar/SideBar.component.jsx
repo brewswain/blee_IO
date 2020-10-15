@@ -6,7 +6,7 @@ import { Chevron } from "../../../assets";
 
 import { firestore } from "../../../firebase/firebase.utils";
 
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
   const [componentExpanded, setComponentExpanded] = useState(false);
@@ -42,13 +42,17 @@ const SideBar = () => {
               className="accordion__category"
               onClick={() => {
                 setComponentExpanded(!componentExpanded);
+                setCommonFlowsExpanded(false);
+                setProjectStructureExpanded(false);
               }}
-            >Components
+            >
+              Components
               <Chevron
                 className={`${
                   componentExpanded ? "accordion__chevron--expanded" : null
                 } accordion__chevron`}
-              /></div>
+              />
+            </div>
             <div
               className={`${
                 componentExpanded
@@ -57,12 +61,14 @@ const SideBar = () => {
               } accordion__details`}
             >
               {collectionsArray.map((componentLink) => (
-                <Link
+                <NavLink
+                  key={componentLink}
                   className="sidebar__link"
+                  activeClassName="sidebar__link--active"
                   to={`/components/${componentLink}`}
                 >
                   {componentLink}
-                </Link>
+                </NavLink>
               ))}
             </div>
           </div>
@@ -71,6 +77,8 @@ const SideBar = () => {
               className="accordion__category"
               onClick={() => {
                 setCommonFlowsExpanded(!commonFlowsExpanded);
+                setComponentExpanded(false);
+                setProjectStructureExpanded(false);
               }}
             >
               Common Flows
@@ -88,12 +96,14 @@ const SideBar = () => {
               } accordion__details`}
             >
               {commonFlowsTestArray.map((commonFlowsLink) => (
-                <Link
+                <NavLink
+                  key={commonFlowsLink}
                   className="sidebar__link"
+                  activeClassName="sidebar__link--active"
                   to={`/commonFlows/${commonFlowsLink}`}
                 >
                   {commonFlowsLink}
-                </Link>
+                </NavLink>
               ))}
             </div>
           </div>
@@ -102,6 +112,8 @@ const SideBar = () => {
               className="accordion__category"
               onClick={() => {
                 setProjectStructureExpanded(!projectStructureExpanded);
+                setCommonFlowsExpanded(false);
+                setComponentExpanded(false);
               }}
             >
               Project Structure
@@ -120,13 +132,15 @@ const SideBar = () => {
                   : "accordion__details--invisible"
               } accordion__details`}
             >
-              {projectStructureTestArray.map((commonFlowsLink) => (
-                <Link
+              {projectStructureTestArray.map((projectStructureLink) => (
+                <NavLink
+                  key={projectStructureLink}
                   className="sidebar__link"
-                  to={`/projectStructure/${commonFlowsLink}`}
+                  activeClassName="sidebar__link--active"
+                  to={`/projectStructure/${projectStructureLink}`}
                 >
-                  {commonFlowsLink}
-                </Link>
+                  {projectStructureLink}
+                </NavLink>
               ))}
             </div>
           </div>

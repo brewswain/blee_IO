@@ -1,3 +1,9 @@
+.page {
+  &__container {
+    width: 100%;
+  }
+}
+
 .site {
   &__wrapper {
     display: flex;
@@ -17,5 +23,13 @@
     font-size: 1.3rem;
     line-height: 1.5;
     text-align: justify;
+  }
+
+  &__link {
+    width: 400px;
+  }
+
+  &__image {
+    max-width: 400px;
   }
 }

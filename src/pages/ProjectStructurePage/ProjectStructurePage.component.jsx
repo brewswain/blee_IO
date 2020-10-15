@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { PageContent, SideBar, TopBar } from "../../partials";
+import { PageContent } from "../../partials";
 import { firestore, storage } from "../../firebase/firebase.utils";
 
 import { useLocation } from "react-router-dom";
@@ -61,22 +61,19 @@ const ProjectStructurePage = () => {
   return (
     // Chose to use 2 classes for the eventuality of styling clashes
     // between differing pages
-      <div className="page__container homepage__container">
-        <TopBar />
-
-        <div className="site__wrapper">
-          <SideBar />
-          <PageContent
-            name={componentData.name}
-            codeSnippet={componentData.codeSnippet}
-            codeSnippet_1={componentData.codeSnippet_1}
-            codeSnippet_2={componentData.codeSnippet_2}
-            codeSnippet_3={componentData.codeSnippet_3}
-            downloadUrl={downloadUrl}
-            styleSnippet={componentData.styleSnippet}
-          />
-        </div>
+    <div className="page__container homepage__container">
+      <div className="site__wrapper">
+        <PageContent
+          name={componentData.name}
+          codeSnippet={componentData.codeSnippet}
+          codeSnippet_1={componentData.codeSnippet_1}
+          codeSnippet_2={componentData.codeSnippet_2}
+          codeSnippet_3={componentData.codeSnippet_3}
+          downloadUrl={downloadUrl}
+          styleSnippet={componentData.styleSnippet}
+        />
       </div>
+    </div>
   );
 };
 

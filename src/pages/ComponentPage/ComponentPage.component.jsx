@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "./ComponentPage.style.scss";
 
-import { PageContent, SideBar, TopBar } from "../../partials";
+import { PageContent } from "../../partials";
 import { firestore, storage } from "../../firebase/firebase.utils";
 
 import { useLocation } from "react-router-dom";
@@ -57,19 +57,16 @@ const ComponentPage = () => {
   return (
     // Chose to use 2 classes for the eventuality of styling clashes
     // between differing pages
-      <div className="page__container homepage__container">
-        <TopBar/>
-
-        <div className="site__wrapper">
-          <SideBar />
-          <PageContent
-            name={componentData.name}
-            codeSnippet={componentData.codeSnippet}
-            styleSnippet={componentData.styleSnippet}
-            downloadUrl={downloadUrl}
-          />
-        </div>
+    <div className="page__container homepage__container">
+      <div className="site__wrapper">
+        <PageContent
+          name={componentData.name}
+          codeSnippet={componentData.codeSnippet}
+          styleSnippet={componentData.styleSnippet}
+          downloadUrl={downloadUrl}
+        />
       </div>
+    </div>
   );
 };
 

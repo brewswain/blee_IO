@@ -740,8 +740,10 @@ const exampleComponents = {
             let batch = firestore.batch();
 
             objectsToAdd.forEach((object) => {
-                // if you want firebase to assign custom document names, put the property you want them to be named after.
-                // For instance, this site uses collectionRef.doc(object.name) which populates the "addFilesToFirestore" that you're seeing
+                // if you want firebase to assign custom document names, 
+                // put the property you want them to be named after.
+                // For instance, this site uses collectionRef.doc(object.name) 
+                // which populates the "addFilesToFirestore" that you're seeing
                 // as well as the url!
               let newDocumentRef = collectionRef.doc();
               batch.set(newDocumentRef, object);
@@ -752,7 +754,8 @@ const exampleComponents = {
         `,
         codeSnippet_3: `
         // Use this in App.js ONCE
-        // This method requires the structure to be in line with what was shown above, so keep that in mind if you get any weird errors.
+        // This method requires the structure to be in line with what 
+        // was shown above, so keep that in mind if you get any weird errors.
 
         let componentsArray = Object.keys(exampleComponents.components.items).map(
               (key) => exampleComponents.components.items[key]

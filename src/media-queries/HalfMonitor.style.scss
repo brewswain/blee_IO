@@ -1,0 +1,50 @@
+// This is meant for when a 1080p monitor has the window split in half
+
+@media screen and (max-width: 960px) {
+  body {
+    // <SideBar />
+
+    .sidebar {
+      &__link {
+        padding: 4px;
+
+        &--active {
+          font-size: 1.2rem;
+        }
+      }
+    }
+    .accordion {
+      &__category {
+        font-size: 1.3rem;
+      }
+
+      &__container {
+        cursor: pointer;
+        transition: all 0.2s ease-out;
+        width: 200px;
+        padding-left: 1rem;
+      }
+    }
+
+    // <PageContent />
+    .content {
+      &__page {
+        align-items: center;
+      }
+
+      &__codeblock {
+        width: 68vw;
+      }
+
+      &__text {
+        display: none;
+      }
+    }
+
+    .download {
+      &__container {
+        right: 0.7rem;
+      }
+    }
+  }
+}

@@ -11,6 +11,9 @@ body {
   --theme-selector-color: hsl(24, 100%, 50%);
   --download-icon-color: hsl(41, 96%, 62%);
 
+  --tooltip-container-background-color: hsl(0, 0%, 81%);
+  --tooltip-text-color: hsl(0, 0%, 0%);
+
   background: var(--barBackgroundColor);
   transition: all var(--transitionDelay) ease;
 }

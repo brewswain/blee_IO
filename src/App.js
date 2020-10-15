@@ -1,12 +1,16 @@
-import React, {  useState } from "react";
+import React, 
+{ 
+  // useEffect,
+   useState } 
+from "react";
 
 import "./App.css";
 import "./theme.scss";
+import './media-queries/HalfMonitor.style.scss'
 
 import { ThemeContext } from "./contexts";
+import {SideBar, TopBar} from './partials'
 
-// import { migrateDocumentsToFirestore } from "./firebase/firebase.utils";
-// import exampleComponents from "./data/exampleComponents.data";
 import {
   AdminPage,
   CommonFlowPage,
@@ -16,28 +20,43 @@ import {
 } from "./pages/index";
 import { Switch, Route } from "react-router-dom";
 
-function App() {
+// import { migrateDocumentsToFirestore } from "./firebase/firebase.utils";
+// import exampleComponents from "./data/exampleComponents.data";
+
+const App = () => {
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
 
   // Programmatically adds data from our exampleComponents.data.jsx file to our backend.
 
-  // let componentsArray = Object.keys(exampleComponents.components.items).map(
-  //   (key) => exampleComponents.components.items[key]
+  // let componentsArray = Object.keys(exampleComponents.projectStructure.items).map(
+  //   (key) => exampleComponents.projectStructure.items[key]
   // );
   // useEffect(() => {
   //   migrateDocumentsToFirestore(
-  //     "components",
-  //     componentsArray.map(({ name, component, codeSnippet, styleSnippet }) => ({
-  //       // codeSnippet_1, codeSnippet_2, codeSnippet_3
-  //       codeSnippet,
-  //       styleSnippet,
+  //     "projectStructure",
+  //     componentsArray.map(({ 
   //       name,
 
-  //       // codeSnippet_1,
-  //       // codeSnippet_2,
-  //       // codeSnippet_3,
+  //       // component, 
+  //       // codeSnippet, 
+  //       // styleSnippet,
+
+  //       // (projectStructure and commonFlows stuff)
+  //       codeSnippet_1,
+  //       codeSnippet_2,
+  //       codeSnippet_3,
+  //     }) => ({
+  //       name,
+
+  //       // codeSnippet,
+  //       // styleSnippet,
+
+  //       // (projectStructure)
+  //       codeSnippet_1,
+  //       codeSnippet_2,
+  //       codeSnippet_3,
   //     }))
   //   );
   // }, []);
@@ -45,6 +64,10 @@ function App() {
   return (
     <ThemeContext.Provider value={{ themeData, setThemeData }}>
       <div className="App">
+      <TopBar />
+      <div className="site__wrapper">
+
+      <SideBar />
         <Switch>
           <Route exact path="/">
             <HomePage />
@@ -62,6 +85,7 @@ function App() {
             <AdminPage />
           </Route>
         </Switch>
+      </div>
       </div>
     </ThemeContext.Provider>
   );

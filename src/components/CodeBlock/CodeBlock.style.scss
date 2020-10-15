@@ -15,3 +15,33 @@
     cursor: pointer;
   }
 }
+
+.tooltip {
+  &__container {
+    background: var(--tooltip-container-background-color);
+    position: absolute;
+    top: 0.8rem;
+    right: 3.3rem;
+    width: 160px;
+    padding: 7px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    transition: all 0.2s;
+
+    &--visible {
+      visibility: visible;
+      opacity: 1;
+    }
+    &--invisible {
+      opacity: 0;
+    }
+  }
+
+  &__text {
+    color: var(--tooltip-text-color);
+    font-size: 0.9rem;
+  }
+}
