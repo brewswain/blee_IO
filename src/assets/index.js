@@ -1,4 +1,4 @@
-import { ReactComponent as Chevron } from "./SVG/chevronDown.svg";
+import { ReactComponent as Chevron } from "./SVG/chevron.svg";
 import { ReactComponent as CopyIcon } from "./SVG/copyIcon.svg";
 import { ReactComponent as DownloadIcon } from "./SVG/download.svg";
 import { ReactComponent as Menu } from "./SVG/menu.svg";

@@ -39,7 +39,7 @@ const SideBar = () => {
   return (
     <div
       className={`${
-        sidebarState.isActive ? "sidebar__container--active" : null
+        sidebarState.isActive ? "sidebar__container--active" : ""
       } sidebar__container`}
     >
       <div className="sidebar__list">
@@ -94,7 +94,7 @@ const SideBar = () => {
               Common Flows
               <Chevron
                 className={`${
-                  commonFlowsExpanded ? "accordion__chevron--expanded" : null
+                  commonFlowsExpanded ? "accordion__chevron--expanded" : "null"
                 } accordion__chevron`}
               />
             </div>
