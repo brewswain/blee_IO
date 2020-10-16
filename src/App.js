@@ -7,8 +7,9 @@ from "react";
 import "./App.css";
 import "./theme.scss";
 import './media-queries/HalfMonitor.style.scss'
+import './media-queries/LargePhone.style.scss'
 
-import { ThemeContext } from "./contexts";
+import { SideBarContext,ThemeContext } from "./contexts";
 import {SideBar, TopBar} from './partials'
 
 import {
@@ -27,6 +28,10 @@ const App = () => {
   const [themeData, setThemeData] = useState({
     isDarkMode: true,
   });
+
+  const [sidebarState, setSidebarState] = useState({
+    isActive: false
+  })
 
   // Programmatically adds data from our exampleComponents.data.jsx file to our backend.
 
@@ -63,11 +68,13 @@ const App = () => {
 
   return (
     <ThemeContext.Provider value={{ themeData, setThemeData }}>
+        <SideBarContext.Provider value={{sidebarState, setSidebarState}} >
       <div className="App">
       <TopBar />
       <div className="site__wrapper">
 
       <SideBar />
+     
         <Switch>
           <Route exact path="/">
             <HomePage />
@@ -87,6 +94,7 @@ const App = () => {
         </Switch>
       </div>
       </div>
+      </SideBarContext.Provider>
     </ThemeContext.Provider>
   );
 }

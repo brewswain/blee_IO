@@ -2,13 +2,15 @@ import React, { useContext, useEffect } from "react";
 
 import "./TopBar.style.scss";
 
-import { Moon, Sun } from "../../../assets";
-import { ThemeContext } from "../../../contexts";
+import { Menu, Moon, Sun } from "../../../assets";
+import { SideBarContext, ThemeContext } from "../../../contexts";
 
 import { Link } from "react-router-dom";
 
 const TopBar = () => {
   const { themeData, setThemeData } = useContext(ThemeContext);
+  const { sidebarState, setSidebarState } = useContext(SideBarContext);
+
   const themePersistence = window.localStorage.getItem("isDarkMode");
 
   if (!themeData.isDarkMode) {
@@ -45,6 +47,12 @@ const TopBar = () => {
           <Moon className="theme__icon--moon" />
         )}
       </div>
+      <Menu
+        className="theme__icon--menu"
+        onClick={() => {
+          setSidebarState({ isActive: !sidebarState.isActive });
+        }}
+      />
     </div>
   );
 };

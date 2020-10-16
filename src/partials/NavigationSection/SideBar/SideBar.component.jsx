@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import "./SideBar.style.scss";
+
+import { SideBarContext } from "../../../contexts";
 
 import { Chevron } from "../../../assets";
 
@@ -15,6 +17,7 @@ const SideBar = () => {
     false
   );
   const [collectionsArray, setCollectionsArray] = useState([]);
+  const { sidebarState, setSidebarState } = useContext(SideBarContext);
 
   const getCollectionsArray = async () => {
     let componentCollectionsArray = [];
@@ -34,7 +37,11 @@ const SideBar = () => {
   const projectStructureTestArray = ["AddFilesToFirestore"];
 
   return (
-    <div className="sidebar__container">
+    <div
+      className={`${
+        sidebarState.isActive ? "sidebar__container--active" : null
+      } sidebar__container`}
+    >
       <div className="sidebar__list">
         <div className="sidebar__accordion">
           <div className="accordion__container">
@@ -66,6 +73,9 @@ const SideBar = () => {
                   className="sidebar__link"
                   activeClassName="sidebar__link--active"
                   to={`/components/${componentLink}`}
+                  onClick={() => {
+                    setSidebarState({ isActive: !sidebarState.isActive });
+                  }}
                 >
                   {componentLink}
                 </NavLink>
@@ -101,6 +111,9 @@ const SideBar = () => {
                   className="sidebar__link"
                   activeClassName="sidebar__link--active"
                   to={`/commonFlows/${commonFlowsLink}`}
+                  onClick={() => {
+                    setSidebarState({ isActive: !sidebarState.isActive });
+                  }}
                 >
                   {commonFlowsLink}
                 </NavLink>
@@ -138,6 +151,9 @@ const SideBar = () => {
                   className="sidebar__link"
                   activeClassName="sidebar__link--active"
                   to={`/projectStructure/${projectStructureLink}`}
+                  onClick={() => {
+                    setSidebarState({ isActive: !sidebarState.isActive });
+                  }}
                 >
                   {projectStructureLink}
                 </NavLink>
