@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 
 import "./SideBar.style.scss";
 
-import { SideBarContext } from "../../../contexts";
+import { SideBarContext, SideBarLinkContext } from "../../../contexts";
 
 import { Chevron } from "../../../assets";
 
 import { firestore } from "../../../firebase/firebase.utils";
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const SideBar = () => {
   const [componentExpanded, setComponentExpanded] = useState(false);
@@ -17,7 +17,12 @@ const SideBar = () => {
     false
   );
   const [collectionsArray, setCollectionsArray] = useState([]);
+  const [linkActive, setlinkActive] = useState(false);
+
   const { sidebarState, setSidebarState } = useContext(SideBarContext);
+  const { sidebarLinkState, setSidebarLinkState } = useContext(
+    SideBarLinkContext
+  );
 
   const getCollectionsArray = async () => {
     let componentCollectionsArray = [];
@@ -69,12 +74,17 @@ const SideBar = () => {
             >
               {collectionsArray.map((componentLink) => (
                 <NavLink
+                  to="/components"
                   key={componentLink}
-                  className="sidebar__link"
-                  activeClassName="sidebar__link--active"
-                  to={`/components/${componentLink}`}
+                  className={`${
+                    linkActive === componentLink
+                      ? "sidebar__link--active"
+                      : "componentLink"
+                  } sidebar__link`}
                   onClick={() => {
                     setSidebarState({ isActive: !sidebarState.isActive });
+                    setSidebarLinkState({ linkName: componentLink });
+                    setlinkActive(componentLink);
                   }}
                 >
                   {componentLink}
@@ -107,12 +117,17 @@ const SideBar = () => {
             >
               {commonFlowsTestArray.map((commonFlowsLink) => (
                 <NavLink
+                  to="/commonFlows"
                   key={commonFlowsLink}
-                  className="sidebar__link"
-                  activeClassName="sidebar__link--active"
-                  to={`/commonFlows/${commonFlowsLink}`}
+                  className={`${
+                    linkActive === commonFlowsLink
+                      ? "sidebar__link--active"
+                      : "commonFlowsLink"
+                  } sidebar__link`}
                   onClick={() => {
                     setSidebarState({ isActive: !sidebarState.isActive });
+                    setlinkActive(commonFlowsLink);
+                    setSidebarLinkState({ linkName: commonFlowsLink });
                   }}
                 >
                   {commonFlowsLink}
@@ -147,12 +162,17 @@ const SideBar = () => {
             >
               {projectStructureTestArray.map((projectStructureLink) => (
                 <NavLink
+                  to="/projectStructure"
                   key={projectStructureLink}
-                  className="sidebar__link"
-                  activeClassName="sidebar__link--active"
-                  to={`/projectStructure/${projectStructureLink}`}
+                  className={`${
+                    linkActive === projectStructureLink
+                      ? "sidebar__link--active"
+                      : "projectStructureLink"
+                  } sidebar__link`}
                   onClick={() => {
                     setSidebarState({ isActive: !sidebarState.isActive });
+                    setSidebarLinkState({ linkName: projectStructureLink });
+                    setlinkActive(projectStructureLink);
                   }}
                 >
                   {projectStructureLink}

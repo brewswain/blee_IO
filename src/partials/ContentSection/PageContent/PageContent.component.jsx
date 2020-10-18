@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "./PageContent.style.scss";
 
 import ReactMarkdown from "react-markdown";
 
+import { storage } from "../../../firebase/firebase.utils";
 import { DownloadIcon } from "../../../assets";
 import { CodeBlock, StyleBlock } from "../../../components";
+import { useLocation } from "react-router-dom";
 
 const PageContent = ({
   id,
@@ -16,9 +18,23 @@ const PageContent = ({
   codeSnippet_1,
   codeSnippet_2,
   codeSnippet_3,
-  downloadUrl,
   styleSnippet,
 }) => {
+  const [downloadUrl, setDownloadUrl] = useState(null);
+
+  let location = useLocation();
+  let parsedLocation = location.pathname.replace("/", "");
+
+  const storageRef = storage.ref();
+  const getDownload = async () => {
+    setDownloadUrl(
+      await storageRef.child(`${parsedLocation}/${name}.zip`).getDownloadURL()
+    );
+  };
+
+  useEffect(() => {
+    getDownload();
+  }, [name]);
   return (
     <div className="content__page">
       <div className="download__container">

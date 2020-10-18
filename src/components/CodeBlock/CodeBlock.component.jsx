@@ -26,7 +26,7 @@ const CodeBlock = ({ value }) => {
             : "tooltip__container--invisible"
         } tooltip__container`}
       >
-        <span className="tooltip__text">Copied from clipboard!</span>
+        <span className="tooltip__text">Copied to clipboard!</span>
       </div>
       <CopyToClipboard text={value} className="copy__button">
         <CopyIcon className="copy__icon" onClick={showTooltip} />

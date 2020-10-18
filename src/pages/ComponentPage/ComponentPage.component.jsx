@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import "./ComponentPage.style.scss";
 
+import { SideBarLinkContext } from "../../contexts";
 import { PageContent } from "../../partials";
-import { firestore, storage } from "../../firebase/firebase.utils";
-
-import { useLocation } from "react-router-dom";
+import { firestore } from "../../firebase/firebase.utils";
 
 const ComponentPage = () => {
-  // const [currentUrl, setCurrentUrl] = useState("components");
   const [downloadUrl, setDownloadUrl] = useState(null);
-
   const [componentData, setComponentData] = useState({
     name: null,
     codeSnippet: null,
     styleSnippet: null,
   });
-
-  let match = useLocation();
-  const formattedUrl = match.pathname.replace("/", "");
+  const { sidebarLinkState, setSidebarLinkState } = useContext(
+    SideBarLinkContext
+  );
 
   const getCollections = async () => {
-    const collectionsFromFirestore = firestore.doc(`${formattedUrl}`);
+    const collectionsFromFirestore = firestore.doc(
+      `components/${sidebarLinkState.linkName}`
+    );
+
     const snapShot = await collectionsFromFirestore.get();
     const componentObject = snapShot.data();
 
@@ -31,32 +31,13 @@ const ComponentPage = () => {
       codeSnippet: componentObject.codeSnippet,
       styleSnippet: componentObject.styleSnippet,
     });
-
-    // setCurrentUrl(formattedUrl);
-  };
-
-  const storageRef = storage.ref();
-  const getDownload = async () => {
-    setDownloadUrl(
-      await storageRef
-        .child(`components/${componentData.name}.zip`)
-        .getDownloadURL()
-    );
   };
 
   useEffect(() => {
     getCollections();
-  }, [formattedUrl]);
-
-  useEffect(() => {
-    if (componentData.name) {
-      getDownload();
-    }
   }, [componentData]);
 
   return (
-    // Chose to use 2 classes for the eventuality of styling clashes
-    // between differing pages
     <div className="page__container homepage__container">
       <div className="site__wrapper">
         <PageContent

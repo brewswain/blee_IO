@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
+import { SideBarLinkContext } from "../../contexts";
 import { PageContent } from "../../partials";
-import { firestore, storage } from "../../firebase/firebase.utils";
-
-import { useLocation } from "react-router-dom";
+import { firestore } from "../../firebase/firebase.utils";
 
 const ProjectStructurePage = () => {
-  // const [currentUrl, setCurrentUrl] = useState("projectStructure");
-  const [downloadUrl, setDownloadUrl] = useState(null);
-
+  const { sidebarLinkState, setSidebarLinkState } = useContext(
+    SideBarLinkContext
+  );
   const [componentData, setComponentData] = useState({
     name: null,
     codeSnippet: null,
@@ -18,11 +17,10 @@ const ProjectStructurePage = () => {
     codeSnippet_3: null,
   });
 
-  let match = useLocation();
-  const formattedUrl = match.pathname.replace("/", "");
-
   const getCollections = async () => {
-    const collectionsFromFirestore = firestore.doc(`${formattedUrl}`);
+    const collectionsFromFirestore = firestore.doc(
+      `projectStructure/${sidebarLinkState.linkName}`
+    );
     const snapShot = await collectionsFromFirestore.get();
     const componentObject = snapShot.data();
 
@@ -35,32 +33,13 @@ const ProjectStructurePage = () => {
       codeSnippet_3: componentObject.codeSnippet_3,
       styleSnippet: componentObject.styleSnippet,
     });
-
-    // setCurrentUrl(formattedUrl);
-  };
-
-  const storageRef = storage.ref();
-  const getDownload = async () => {
-    setDownloadUrl(
-      await storageRef
-        .child(`projectStructure/${componentData.name}.zip`)
-        .getDownloadURL()
-    );
   };
 
   useEffect(() => {
     getCollections();
-  }, [formattedUrl]);
-
-  useEffect(() => {
-    if (componentData.name) {
-      getDownload();
-    }
   }, [componentData]);
 
   return (
-    // Chose to use 2 classes for the eventuality of styling clashes
-    // between differing pages
     <div className="page__container homepage__container">
       <div className="site__wrapper">
         <PageContent
@@ -69,7 +48,6 @@ const ProjectStructurePage = () => {
           codeSnippet_1={componentData.codeSnippet_1}
           codeSnippet_2={componentData.codeSnippet_2}
           codeSnippet_3={componentData.codeSnippet_3}
-          downloadUrl={downloadUrl}
           styleSnippet={componentData.styleSnippet}
         />
       </div>
