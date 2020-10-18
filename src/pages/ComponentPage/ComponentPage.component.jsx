@@ -18,9 +18,9 @@ const ComponentPage = () => {
   );
 
   const getCollections = async () => {
-    const collectionsFromFirestore = firestore.doc(
-      `components/${sidebarLinkState.linkName}`
-    );
+    const collectionsFromFirestore = sidebarLinkState.linkName
+      ? firestore.doc(`components/${sidebarLinkState.linkName}`)
+      : firestore.doc("components/Card");
 
     const snapShot = await collectionsFromFirestore.get();
     const componentObject = snapShot.data();

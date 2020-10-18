@@ -18,9 +18,9 @@ const ProjectStructurePage = () => {
   });
 
   const getCollections = async () => {
-    const collectionsFromFirestore = firestore.doc(
-      `projectStructure/${sidebarLinkState.linkName}`
-    );
+    const collectionsFromFirestore = sidebarLinkState.linkName
+      ? firestore.doc(`projectStructure/${sidebarLinkState.linkName}`)
+      : firestore.doc("projectStructure/AddFilesToFirestore");
     const snapShot = await collectionsFromFirestore.get();
     const componentObject = snapShot.data();
 

@@ -48,8 +48,8 @@ const PageContent = ({
         {/* unsure how to implement this for now; maybe innerHTML or something */}
 
         {/* <div className="content__example" inn>
-        {code[0].code}
-      </div> */}
+          {code[0].code}
+        </div> */}
         {codeSnippet ? (
           <>
             <div className="content__subheader">Example Component:</div>

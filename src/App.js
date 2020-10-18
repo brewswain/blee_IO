@@ -16,11 +16,9 @@ import {
   CommonFlowPage,
   ComponentPage,
   HomePage,
-  NewCommonFlowPage,
   ProjectStructurePage,
-  TestPage,
 } from "./pages";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import {  Switch, Route } from "react-router-dom";
 
 // import { migrateDocumentsToFirestore } from "./firebase/firebase.utils";
 // import exampleComponents from "./data/exampleComponents.data";
@@ -83,6 +81,7 @@ const App = () => {
               <SideBar />
               <Switch>
                 <Route exact path="/" component={HomePage} />
+
                 <Route path="/components" component={ComponentPage} />
                 <Route path="/commonFlows" component={CommonFlowPage} />
                 <Route
