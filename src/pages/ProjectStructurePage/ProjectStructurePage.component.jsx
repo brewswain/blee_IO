@@ -7,6 +7,8 @@ import {
 } from "../../contexts";
 import { PageContent } from "../../partials";
 
+import { firestore } from "../../firebase/firebase.utils";
+
 const ProjectStructurePage = () => {
   const { sidebarLinkState } = useContext(SideBarLinkContext);
   const { loadingState, setLoadingState } = useContext(LoadingContext);
@@ -23,19 +25,36 @@ const ProjectStructurePage = () => {
   const getCollections = async () => {
     const selectedItem = sidebarLinkState.linkName;
 
-    const componentObject = completeProjectStructureData.filter(
-      (component) => component.name === selectedItem
-    );
+    if (!selectedItem) {
+      const collectionFromFirestore = firestore.doc(
+        "projectStructure/AddFilesToFirestore"
+      );
+      const snapshot = await collectionFromFirestore.get();
 
-    setComponentData({
-      name: componentObject[0].name,
-      codeSnippet: componentObject[0].codeSnippet,
-      styleSnippet: componentObject[0].styleSnippet,
-      codeSnippet_1: componentObject[0].codeSnippet_1,
-      codeSnippet_2: componentObject[0].codeSnippet_2,
-      codeSnippet_3: componentObject[0].codeSnippet_3,
-    });
+      const componentObject = snapshot.data();
 
+      setComponentData({
+        name: componentObject.name,
+        codeSnippet: componentObject.codeSnippet,
+        styleSnippet: componentObject.styleSnippet,
+        codeSnippet_1: componentObject.codeSnippet_1,
+        codeSnippet_2: componentObject.codeSnippet_2,
+        codeSnippet_3: componentObject.codeSnippet_3,
+      });
+    } else {
+      const componentObject = completeProjectStructureData.filter(
+        (component) => component.name === selectedItem
+      );
+
+      setComponentData({
+        name: componentObject[0].name,
+        codeSnippet: componentObject[0].codeSnippet,
+        styleSnippet: componentObject[0].styleSnippet,
+        codeSnippet_1: componentObject[0].codeSnippet_1,
+        codeSnippet_2: componentObject[0].codeSnippet_2,
+        codeSnippet_3: componentObject[0].codeSnippet_3,
+      });
+    }
     setLoadingState({ isLoaded: true });
   };
 

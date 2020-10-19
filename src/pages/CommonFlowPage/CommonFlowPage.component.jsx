@@ -7,6 +7,8 @@ import {
 } from "../../contexts";
 import { PageContent } from "../../partials";
 
+import { firestore } from "../../firebase/firebase.utils";
+
 const CommonFlowPage = () => {
   const { sidebarLinkState } = useContext(SideBarLinkContext);
   const { completeCommonFlowsData } = useContext(CommonFlowsContext);
@@ -24,18 +26,36 @@ const CommonFlowPage = () => {
     if (!loadingState.isLoaded) {
       const selectedItem = sidebarLinkState.linkName;
 
-      const componentObject = completeCommonFlowsData.filter(
-        (component) => component.name === selectedItem
-      );
+      if (!selectedItem) {
+        const collectionFromFirestore = firestore.doc(
+          "commonFlows/FirebaseAuth"
+        );
+        const snapshot = await collectionFromFirestore.get();
 
-      setComponentData({
-        name: componentObject[0].name,
-        language: componentObject[0].language,
-        codeSnippet: componentObject[0].codeSnippet,
-        codeSnippet_1: componentObject[0].codeSnippet_1,
-        codeSnippet_2: componentObject[0].codeSnippet_2,
-        styleSnippet: componentObject[0].styleSnippet,
-      });
+        const componentObject = snapshot.data();
+
+        setComponentData({
+          name: componentObject.name,
+          language: componentObject.language,
+          codeSnippet: componentObject.codeSnippet,
+          codeSnippet_1: componentObject.codeSnippet_1,
+          codeSnippet_2: componentObject.codeSnippet_2,
+          styleSnippet: componentObject.styleSnippet,
+        });
+      } else {
+        const componentObject = completeCommonFlowsData.filter(
+          (component) => component.name === selectedItem
+        );
+
+        setComponentData({
+          name: componentObject[0].name,
+          language: componentObject[0].language,
+          codeSnippet: componentObject[0].codeSnippet,
+          codeSnippet_1: componentObject[0].codeSnippet_1,
+          codeSnippet_2: componentObject[0].codeSnippet_2,
+          styleSnippet: componentObject[0].styleSnippet,
+        });
+      }
 
       setLoadingState({ isLoaded: true });
     }

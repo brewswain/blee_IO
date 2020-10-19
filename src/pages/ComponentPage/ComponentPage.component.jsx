@@ -9,6 +9,8 @@ import {
 } from "../../contexts";
 import { PageContent } from "../../partials";
 
+import { firestore } from "../../firebase/firebase.utils";
+
 const ComponentPage = () => {
   const [downloadUrl] = useState(null);
   const [componentData, setComponentData] = useState({
@@ -24,20 +26,32 @@ const ComponentPage = () => {
   const getCollections = async () => {
     if (!loadingState.isLoaded) {
       const selectedItem = sidebarLinkState.linkName;
+      if (!selectedItem) {
+        const collectionFromFirestore = firestore.doc("components/Card");
+        const snapshot = await collectionFromFirestore.get();
 
-      const componentObject = completeComponentsData.filter(
-        (component) => component.name === selectedItem
-      );
+        const componentObject = snapshot.data();
 
-      setComponentData({
-        name: componentObject[0].name,
-        language: componentObject[0].language,
-        codeSnippet: componentObject[0].codeSnippet,
-        styleSnippet: componentObject[0].styleSnippet,
-      });
+        setComponentData({
+          name: componentObject.name,
+          language: componentObject.language,
+          codeSnippet: componentObject.codeSnippet,
+          styleSnippet: componentObject.styleSnippet,
+        });
+      } else {
+        const componentObject = completeComponentsData.filter(
+          (component) => component.name === selectedItem
+        );
+
+        setComponentData({
+          name: componentObject[0].name,
+          language: componentObject[0].language,
+          codeSnippet: componentObject[0].codeSnippet,
+          styleSnippet: componentObject[0].styleSnippet,
+        });
+      }
 
       setLoadingState({ isLoaded: true });
-      console.log("data pulled!");
     }
     return;
   };
