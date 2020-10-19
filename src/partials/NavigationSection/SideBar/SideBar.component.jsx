@@ -2,13 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 
 import "./SideBar.style.scss";
 
-import { SideBarContext, SideBarLinkContext } from "../../../contexts";
+import {
+  CommonFlowsContext,
+  ComponentsContext,
+  LoadingContext,
+  ProjectStructureContext,
+  SideBarContext,
+  SideBarLinkContext,
+} from "../../../contexts";
 
 import { Chevron } from "../../../assets";
 
 import { firestore } from "../../../firebase/firebase.utils";
 
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
   const [componentExpanded, setComponentExpanded] = useState(false);
@@ -16,30 +23,68 @@ const SideBar = () => {
   const [projectStructureExpanded, setProjectStructureExpanded] = useState(
     false
   );
-  const [collectionsArray, setCollectionsArray] = useState([]);
-  const [linkActive, setlinkActive] = useState(false);
+  const [linkActive, setLinkActive] = useState(false);
 
-  const { sidebarState, setSidebarState } = useContext(SideBarContext);
-  const { sidebarLinkState, setSidebarLinkState } = useContext(
-    SideBarLinkContext
+  const [componentsArray, setComponentsArray] = useState([]);
+  const { setCompleteComponentsData } = useContext(ComponentsContext);
+
+  const [commonFlowsArray, setCommonFlowsArray] = useState([]);
+  const { setCompleteCommonFlowsData } = useContext(CommonFlowsContext);
+
+  const [projectStructureArray, setProjectStructureArray] = useState([]);
+  const { setCompleteProjectStructureData } = useContext(
+    ProjectStructureContext
   );
 
+  const { sidebarState, setSidebarState } = useContext(SideBarContext);
+  const { setSidebarLinkState } = useContext(SideBarLinkContext);
+  const { setLoadingState } = useContext(LoadingContext);
+
   const getCollectionsArray = async () => {
+    // components section
     let componentCollectionsArray = [];
+    let completeComponentsDataArray = [];
+
     const collectionsRef = firestore.collection("components");
     const collectionsSnapshot = await collectionsRef.get();
     collectionsSnapshot.forEach((collection) => {
       componentCollectionsArray.push(collection.data().name);
+      completeComponentsDataArray.push(collection.data());
     });
-    setCollectionsArray(componentCollectionsArray);
+    setComponentsArray(componentCollectionsArray);
+    setCompleteComponentsData(completeComponentsDataArray);
+
+    // commonFlows section
+    let commonFlowsCollectionsArray = [];
+    let completeCommonFlowsDataArray = [];
+
+    const commonFlowsRef = firestore.collection("commonFlows");
+    const commonFlowsSnapshot = await commonFlowsRef.get();
+    commonFlowsSnapshot.forEach((collection) => {
+      commonFlowsCollectionsArray.push(collection.data().name);
+      completeCommonFlowsDataArray.push(collection.data());
+    });
+    setCommonFlowsArray(commonFlowsCollectionsArray);
+    setCompleteCommonFlowsData(completeCommonFlowsDataArray);
+
+    // projectStructure section
+
+    let projectStructureCollectionsArray = [];
+    let completeProjectStructureDataArray = [];
+
+    const projectStructureRef = firestore.collection("projectStructure");
+    const projectStructureSnapshot = await projectStructureRef.get();
+    projectStructureSnapshot.forEach((collection) => {
+      projectStructureCollectionsArray.push(collection.data().name);
+      completeProjectStructureDataArray.push(collection.data());
+    });
+    setProjectStructureArray(projectStructureCollectionsArray);
+    setCompleteProjectStructureData(completeProjectStructureDataArray);
   };
 
   useEffect(() => {
     getCollectionsArray();
   }, []);
-
-  const commonFlowsTestArray = ["FirebaseAuth", "ThemeToggle"];
-  const projectStructureTestArray = ["AddFilesToFirestore"];
 
   return (
     <div
@@ -72,7 +117,7 @@ const SideBar = () => {
                   : "accordion__details--invisible"
               } accordion__details`}
             >
-              {collectionsArray.map((componentLink) => (
+              {componentsArray.map((componentLink) => (
                 <NavLink
                   to="/components"
                   key={componentLink}
@@ -84,7 +129,8 @@ const SideBar = () => {
                   onClick={() => {
                     setSidebarState({ isActive: !sidebarState.isActive });
                     setSidebarLinkState({ linkName: componentLink });
-                    setlinkActive(componentLink);
+                    setLinkActive(componentLink);
+                    setLoadingState({ isLoaded: false });
                   }}
                 >
                   {componentLink}
@@ -115,7 +161,7 @@ const SideBar = () => {
                   : "accordion__details--invisible"
               } accordion__details`}
             >
-              {commonFlowsTestArray.map((commonFlowsLink) => (
+              {commonFlowsArray.map((commonFlowsLink) => (
                 <NavLink
                   to="/commonFlows"
                   key={commonFlowsLink}
@@ -126,8 +172,9 @@ const SideBar = () => {
                   } sidebar__link`}
                   onClick={() => {
                     setSidebarState({ isActive: !sidebarState.isActive });
-                    setlinkActive(commonFlowsLink);
+                    setLinkActive(commonFlowsLink);
                     setSidebarLinkState({ linkName: commonFlowsLink });
+                    setLoadingState({ isLoaded: false });
                   }}
                 >
                   {commonFlowsLink}
@@ -160,7 +207,7 @@ const SideBar = () => {
                   : "accordion__details--invisible"
               } accordion__details`}
             >
-              {projectStructureTestArray.map((projectStructureLink) => (
+              {projectStructureArray.map((projectStructureLink) => (
                 <NavLink
                   to="/projectStructure"
                   key={projectStructureLink}
@@ -172,7 +219,8 @@ const SideBar = () => {
                   onClick={() => {
                     setSidebarState({ isActive: !sidebarState.isActive });
                     setSidebarLinkState({ linkName: projectStructureLink });
-                    setlinkActive(projectStructureLink);
+                    setLinkActive(projectStructureLink);
+                    setLoadingState({ isLoaded: false });
                   }}
                 >
                   {projectStructureLink}

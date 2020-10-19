@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 
-import { SideBarLinkContext } from "../../contexts";
+import {
+  CommonFlowsContext,
+  LoadingContext,
+  SideBarLinkContext,
+} from "../../contexts";
 import { PageContent } from "../../partials";
-import { firestore } from "../../firebase/firebase.utils";
 
 const CommonFlowPage = () => {
-  const { sidebarLinkState, setSidebarLinkState } = useContext(
-    SideBarLinkContext
-  );
+  const { sidebarLinkState } = useContext(SideBarLinkContext);
+  const { completeCommonFlowsData } = useContext(CommonFlowsContext);
+  const { loadingState, setLoadingState } = useContext(LoadingContext);
 
   const [componentData, setComponentData] = useState({
     name: null,
@@ -17,33 +20,31 @@ const CommonFlowPage = () => {
     codeSnippet_2: null,
   });
 
-  const [itemExists, setItemExists] = useState(null);
-
   const getCollections = async () => {
-    const collectionsFromFirestore = sidebarLinkState.linkName
-      ? firestore.doc(`commonFlows/${sidebarLinkState.linkName}`)
-      : firestore.doc("commonFlows/FirebaseAuth");
-    const snapShot = await collectionsFromFirestore.get();
-    const componentObject = snapShot.data();
+    if (!loadingState.isLoaded) {
+      const selectedItem = sidebarLinkState.linkName;
 
-    if (snapShot.exists) {
+      const componentObject = completeCommonFlowsData.filter(
+        (component) => component.name === selectedItem
+      );
+
       setComponentData({
-        name: componentObject.name,
-        language: componentObject.language,
-        codeSnippet: componentObject.codeSnippet,
-        codeSnippet_1: componentObject.codeSnippet_1,
-        codeSnippet_2: componentObject.codeSnippet_2,
-        styleSnippet: componentObject.styleSnippet,
+        name: componentObject[0].name,
+        language: componentObject[0].language,
+        codeSnippet: componentObject[0].codeSnippet,
+        codeSnippet_1: componentObject[0].codeSnippet_1,
+        codeSnippet_2: componentObject[0].codeSnippet_2,
+        styleSnippet: componentObject[0].styleSnippet,
       });
-      setItemExists(true);
-    } else {
-      setItemExists(false);
+
+      setLoadingState({ isLoaded: true });
     }
+    return;
   };
 
   useEffect(() => {
     getCollections();
-  }, [componentData]);
+  }, [loadingState]);
 
   return (
     <div className="page__container homepage__container">
@@ -54,7 +55,6 @@ const CommonFlowPage = () => {
           codeSnippet_1={componentData.codeSnippet_1}
           codeSnippet_2={componentData.codeSnippet_2}
           styleSnippet={componentData.styleSnippet}
-          itemExists={itemExists}
         />
       </div>
     </div>

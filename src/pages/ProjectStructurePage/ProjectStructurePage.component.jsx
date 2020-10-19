@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 
-import { SideBarLinkContext } from "../../contexts";
+import {
+  LoadingContext,
+  ProjectStructureContext,
+  SideBarLinkContext,
+} from "../../contexts";
 import { PageContent } from "../../partials";
-import { firestore } from "../../firebase/firebase.utils";
 
 const ProjectStructurePage = () => {
-  const { sidebarLinkState, setSidebarLinkState } = useContext(
-    SideBarLinkContext
-  );
+  const { sidebarLinkState } = useContext(SideBarLinkContext);
+  const { loadingState, setLoadingState } = useContext(LoadingContext);
+  const { completeProjectStructureData } = useContext(ProjectStructureContext);
   const [componentData, setComponentData] = useState({
     name: null,
     codeSnippet: null,
@@ -18,25 +21,28 @@ const ProjectStructurePage = () => {
   });
 
   const getCollections = async () => {
-    const collectionsFromFirestore = sidebarLinkState.linkName
-      ? firestore.doc(`projectStructure/${sidebarLinkState.linkName}`)
-      : firestore.doc("projectStructure/AddFilesToFirestore");
-    const snapShot = await collectionsFromFirestore.get();
-    const componentObject = snapShot.data();
+    const selectedItem = sidebarLinkState.linkName;
+
+    const componentObject = completeProjectStructureData.filter(
+      (component) => component.name === selectedItem
+    );
 
     setComponentData({
-      name: componentObject.name,
-      language: componentObject.language,
-      codeSnippet: componentObject.codeSnippet,
-      codeSnippet_1: componentObject.codeSnippet_1,
-      codeSnippet_2: componentObject.codeSnippet_2,
-      codeSnippet_3: componentObject.codeSnippet_3,
-      styleSnippet: componentObject.styleSnippet,
+      name: componentObject[0].name,
+      codeSnippet: componentObject[0].codeSnippet,
+      styleSnippet: componentObject[0].styleSnippet,
+      codeSnippet_1: componentObject[0].codeSnippet_1,
+      codeSnippet_2: componentObject[0].codeSnippet_2,
+      codeSnippet_3: componentObject[0].codeSnippet_3,
     });
+
+    setLoadingState({ isLoaded: true });
   };
 
   useEffect(() => {
-    getCollections();
+    if (!loadingState.isLoaded) {
+      getCollections();
+    }
   }, [componentData]);
 
   return (

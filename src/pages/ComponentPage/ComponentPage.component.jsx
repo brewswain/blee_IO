@@ -2,40 +2,49 @@ import React, { useState, useEffect, useContext } from "react";
 
 import "./ComponentPage.style.scss";
 
-import { SideBarLinkContext } from "../../contexts";
+import {
+  ComponentsContext,
+  LoadingContext,
+  SideBarLinkContext,
+} from "../../contexts";
 import { PageContent } from "../../partials";
-import { firestore } from "../../firebase/firebase.utils";
 
 const ComponentPage = () => {
-  const [downloadUrl, setDownloadUrl] = useState(null);
+  const [downloadUrl] = useState(null);
   const [componentData, setComponentData] = useState({
     name: null,
     codeSnippet: null,
     styleSnippet: null,
   });
-  const { sidebarLinkState, setSidebarLinkState } = useContext(
-    SideBarLinkContext
-  );
+
+  const { sidebarLinkState } = useContext(SideBarLinkContext);
+  const { completeComponentsData } = useContext(ComponentsContext);
+  const { loadingState, setLoadingState } = useContext(LoadingContext);
 
   const getCollections = async () => {
-    const collectionsFromFirestore = sidebarLinkState.linkName
-      ? firestore.doc(`components/${sidebarLinkState.linkName}`)
-      : firestore.doc("components/Card");
+    if (!loadingState.isLoaded) {
+      const selectedItem = sidebarLinkState.linkName;
 
-    const snapShot = await collectionsFromFirestore.get();
-    const componentObject = snapShot.data();
+      const componentObject = completeComponentsData.filter(
+        (component) => component.name === selectedItem
+      );
 
-    setComponentData({
-      name: componentObject.name,
-      language: componentObject.language,
-      codeSnippet: componentObject.codeSnippet,
-      styleSnippet: componentObject.styleSnippet,
-    });
+      setComponentData({
+        name: componentObject[0].name,
+        language: componentObject[0].language,
+        codeSnippet: componentObject[0].codeSnippet,
+        styleSnippet: componentObject[0].styleSnippet,
+      });
+
+      setLoadingState({ isLoaded: true });
+      console.log("data pulled!");
+    }
+    return;
   };
 
   useEffect(() => {
     getCollections();
-  }, [componentData]);
+  }, [loadingState]);
 
   return (
     <div className="page__container homepage__container">
